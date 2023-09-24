@@ -51,4 +51,11 @@ class MusicController extends BaseController
     {
         //
     }
+
+    public function delete($id)
+    {
+        $this->music->delete($id);
+        
+        return redirect()->to('/music');
+    }
 }

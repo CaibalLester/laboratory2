@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script> var writePath = "C:\laragon\www\laboratoryact2\writable\uploads"; </script>
     <style>
     body {
          font-family: Arial, sans-serif;
@@ -71,6 +72,7 @@
   background-color: #eee;
   border-radius: 10px;
 }
+
     </style>
 </head>
 <body>
@@ -165,27 +167,32 @@
   My Playlist
 </button>
 
-    <audio id="audio" controls autoplay></audio>
-    
+
+
+
+<audio id="audio" controls autoplay></audio>
 
     <ul id="myUL">
-  <?php foreach($music as $pr): ?>
-    <li><a href="#"><?= $pr['name'] ?></a></li>
-  <?php endforeach; ?>
-</ul>
+        <?php foreach ($music as $index => $pr): ?>
+            <li data-src="Delilah.mp3">
+              <a href="#">
+                <?= $pr['name'] ?>
+                &nbsp&nbsp
+                <button type="button" class="btn btn-primary play-button" data-track-index="<?= $index ?>">
+                Play
+              </button>
+             
+              <a type="button" class="btn btn-primary" href="/delete/<?= $pr['id'] ?>" >Delete</a>
+            
+             
+              
+            </a>  
+            </li>
+        <?php endforeach; ?>
+    </ul>
   </form>
    
  
-
-    <div class="modal" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          
-
-        </div>
-      </div>
-    </div>
     <script>
     $(document).ready(function () {
   // Get references to the button and modal
@@ -211,6 +218,8 @@
   });
 });
     </script>
+
+
     <script>
         const audio = document.getElementById('audio');
         const playlist = document.getElementById('playlist');
@@ -266,6 +275,10 @@
         }
     }
 }
+    </script>
+    <script>
+        // Example: Use writePath in JavaScript
+        console.log("writePath:", writePath);
     </script>
 </body>
 </html>
