@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script> var writePath = "C:\laragon\www\laboratoryact2\writable\uploads"; </script>
     <style>
     body {
@@ -154,14 +154,13 @@
           <form action="/" method="post">
             <!-- <p id="modalData"></p> -->
             <input type="hidden" id="musicID" name="musicID">
-            <select  name="playlist" class="form-control" >
-
-              <option value="playlist"><?php foreach($music as $pr): ?>
-    <li><a href="#"><?= $pr['name'] ?></a></li>
-  <?php endforeach; ?></option>
-
-            </select>
-            <input type="submit" name="add">
+                        <ul id="playlist">
+                <?php foreach ($music as $index => $pr): ?>
+                        <li data-src="<?=base_url(); ?>/music/<?= $pr['audio']; ?>.mp3"><?= $pr['audio']; ?>
+                          <a href="/addtoplaylist" class="hover-effect">
+                          </a>  </li>
+                  <?php endforeach; ?>
+                </ul>
             </form>
           </div>
 
@@ -175,7 +174,7 @@
 
 
 
-  <form action="#audio" method="get">
+  <form action="/" method="get">
 <input type="text" id="myPlaylist" onkeyup="myFunction()" placeholder="Search song..." title="Type in a song">
 
    
@@ -183,15 +182,18 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   My Playlist
 </button>
-
+<a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPlaylist">Add Music</a>
 <audio id="audio" controls autoplay></audio>
     <ul id="playlist">
-    <?php foreach ($music as $song): ?>
-            <li data-src="<?=base_url(); ?>/music/<?= $song['audio']; ?>.mp3"><?= $song['audio']; ?>
+    <?php foreach ($music as $index => $pr): ?>
+            <li data-src="<?=base_url(); ?>/music/<?= $pr['audio']; ?>.mp3"><?= $pr['audio']; ?>
+            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPlaylist">+</a>
               <a href="/addtoplaylist" class="hover-effect">
+              
               </a>  </li>
       <?php endforeach; ?>
     </ul>
+    
   </form>
 
 
