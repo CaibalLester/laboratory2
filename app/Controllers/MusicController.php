@@ -24,17 +24,13 @@ class MusicController extends BaseController
         return view('musics', $data);
     }
 
-   
     public function save()
     {
-        
         $data = [
             'name' => $this->request->getVar('name'),
             'audio' => $this->request->getVar('audio'),
         ];
-            
-                    $this->music->insert($data);
-                   
+                $this->music->insert($data);
                 return redirect()->to('/music');
     }
 
@@ -55,7 +51,6 @@ class MusicController extends BaseController
     public function delete($id)
     {
         $this->music->delete($id);
-        
         return redirect()->to('/music');
     }
 }

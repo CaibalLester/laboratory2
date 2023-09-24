@@ -15,11 +15,9 @@
          background-color: #f5f5f5;
          padding: 20px;
      }
-
      h1 {
          color: #333;
      }
-
      #player-container {
          max-width: 400px;
          margin: 0 auto;
@@ -27,16 +25,13 @@
          background-color: #fff;
          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
      }
-
      audio {
          width: 100%;
      }
-
      #playlist {
          list-style: none;
          padding: 0;
      }
-
      #playlist li {
          cursor: pointer;
          padding: 10px;
@@ -44,57 +39,46 @@
          margin: 5px 0;
          transition: background-color 0.2s ease-in-out;
      }
-
      #playlist li:hover {
          background-color: #ddd;
      }
-
      #playlist li.active {
          background-color: #007bff;
          color: #fff;
      }
-
-
      * {
-  box-sizing: border-box;
-}
+          box-sizing: border-box;
+        }
 
-#myPlaylist {
-  background-image: url('/css/searchicon.png');
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  width: 25%;
-  border-radius: 15px;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-
-
-
-#myPlaylist li a {
-  border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 12px;
-  text-decoration: none;
-  border-radius: 15px;
-  font-size: 18px;
-  color: black;
-  display: block
-}
-
-#myPlaylist li a:hover:not(.header) {
-  background-color: #eee;
-  border-radius: 10px;
-}
-
+    #myPlaylist {
+      background-image: url('/css/searchicon.png');
+      background-position: 10px 12px;
+      background-repeat: no-repeat;
+      width: 25%;
+      border-radius: 15px;
+      font-size: 16px;
+      padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px;
+    }
+    #myPlaylist li a {
+      border: 1px solid #ddd;
+      margin-top: -1px; /* Prevent double borders */
+      background-color: #f6f6f6;
+      padding: 12px;
+      text-decoration: none;
+      border-radius: 15px;
+      font-size: 18px;
+      color: black;
+      display: block
+    }
+    #myPlaylist li a:hover:not(.header) {
+      background-color: #eee;
+      border-radius: 10px;
+    }
     </style>
 </head>
 <body>
-
-
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -115,7 +99,7 @@
     </div>
   </div>
 
-  
+
   <form action="/save" method="post">
   <div class="modal fade" id="createPlaylist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,7 +109,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" >
-        
                 <label>Name :</label>
                     <input type="text" name="name" value="<?php if (isset($pro['name'])) {echo $pro['name'];}?>" placeholder="Name">
                     <br><br>
@@ -133,8 +116,7 @@
                     <input type="file" name="audio" value="<?php if (isset($pro['audio'])) {echo $pro['audio'];}?>" placeholder="Audio" accept="audio/*" required >
                     <br><br>
                     <input type="submit" class="btn btn-primary" value="save">
-        </div>
-            
+        </div> 
       </div>
     </div>
   </div>
@@ -148,7 +130,6 @@
             <h4 class="modal-title">Select from playlist</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
-
           <!-- Modal body -->
           <div class="modal-body">
           <form action="/" method="post">
@@ -158,7 +139,8 @@
                 <?php foreach ($music as $index => $pr): ?>
                         <li data-src="<?=base_url(); ?>/music/<?= $pr['audio']; ?>.mp3"><?= $pr['audio']; ?>
                           <a href="/addtoplaylist" class="hover-effect">
-                          </a>  </li>
+                          </a>
+                        </li>
                   <?php endforeach; ?>
                 </ul>
             </form>
@@ -172,58 +154,44 @@
     </div>
   </div>
 
+      <form action="/" method="get">
+    <input type="text" id="myPlaylist" onkeyup="myFunction()" placeholder="Search song..." title="Type in a song">
+      <h1>Music Player</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          My Playlist
+        </button>
+            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPlaylist">Add Music</a>
+            <audio id="audio" controls autoplay></audio>
+                <ul id="playlist">
+            <?php foreach ($music as $index => $pr): ?>
+                <li data-src="<?=base_url(); ?>/music/<?= $pr['audio']; ?>.mp3"><?= $pr['audio']; ?>&nbsp&nbsp&nbsp&nbsp&nbsp
+                <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPlaylist">+</a>
+                <a href="/delete/<?= $pr['id'] ?>" type="button" class="btn btn-danger">Delete</a>
+                 
+                  <a href="/addtoplaylist" class="hover-effect">
+                  
+                  </a>  </li>
+          <?php endforeach; ?>
+        </ul>
+      </form>
 
-
-  <form action="/" method="get">
-<input type="text" id="myPlaylist" onkeyup="myFunction()" placeholder="Search song..." title="Type in a song">
-
-   
-  <h1>Music Player</h1>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  My Playlist
-</button>
-<a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPlaylist">Add Music</a>
-<audio id="audio" controls autoplay></audio>
-    <ul id="playlist">
-    <?php foreach ($music as $index => $pr): ?>
-            <li data-src="<?=base_url(); ?>/music/<?= $pr['audio']; ?>.mp3"><?= $pr['audio']; ?>
-            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPlaylist">+</a>
-              <a href="/addtoplaylist" class="hover-effect">
-              
-              </a>  </li>
-      <?php endforeach; ?>
-    </ul>
-    
-  </form>
-
-
- 
     <script>
-    $(document).ready(function () {
-  // Get references to the button and modal
-  const modal = $("#myModal");
-  const modalData = $("#modalData");
-  const musicID = $("#musicID");
-  // Function to open the modal with the specified data
-  function openModalWithData(dataId) {
-    // Set the data inside the modal content
-    modalData.text("Data ID: " + dataId);
-    musicID.val(dataId);
-    // Display the modal
-    modal.css("display", "block");
-  }
-
-  // Add click event listeners to all open modal buttons
-
-  // When the user clicks the close button or outside the modal, close it
-  modal.click(function (event) {
-    if (event.target === modal[0] || $(event.target).hasClass("close")) {
-      modal.css("display", "none");
-    }
-  });
-});
+          $(document).ready(function () {
+          const modal = $("#myModal");
+          const modalData = $("#modalData");
+          const musicID = $("#musicID");
+          function openModalWithData(dataId) {
+            modalData.text("Data ID: " + dataId);
+            musicID.val(dataId);
+            modal.css("display", "block");
+          }
+        modal.click(function (event) {
+            if (event.target === modal[0] || $(event.target).hasClass("close")) {
+              modal.css("display", "none");
+            }
+          });
+        });
     </script>
-
 
     <script>
         const audio = document.getElementById('audio');
@@ -282,7 +250,6 @@
 }
     </script>
     <script>
-        // Example: Use writePath in JavaScript
         console.log("writePath:", writePath);
     </script>
 </body>
