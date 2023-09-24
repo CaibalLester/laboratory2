@@ -32,14 +32,34 @@
          width: 100%;
      }
 
-     
+     #playlist {
+         list-style: none;
+         padding: 0;
+     }
+
+     #playlist li {
+         cursor: pointer;
+         padding: 10px;
+         background-color: #eee;
+         margin: 5px 0;
+         transition: background-color 0.2s ease-in-out;
+     }
+
+     #playlist li:hover {
+         background-color: #ddd;
+     }
+
+     #playlist li.active {
+         background-color: #007bff;
+         color: #fff;
+     }
 
 
      * {
   box-sizing: border-box;
 }
 
-#myInput {
+#myPlaylist {
   background-image: url('/css/searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -51,12 +71,9 @@
   margin-bottom: 12px;
 }
 
-#myUL {
-    list-style: none;
-         padding: 0;
-}
 
-#myUL li a {
+
+#myPlaylist li a {
   border: 1px solid #ddd;
   margin-top: -1px; /* Prevent double borders */
   background-color: #f6f6f6;
@@ -68,7 +85,7 @@
   display: block
 }
 
-#myUL li a:hover:not(.header) {
+#myPlaylist li a:hover:not(.header) {
   background-color: #eee;
   border-radius: 10px;
 }
@@ -137,9 +154,9 @@
           <form action="/" method="post">
             <!-- <p id="modalData"></p> -->
             <input type="hidden" id="musicID" name="musicID">
-            <select  name="myUL" class="form-control" >
+            <select  name="playlist" class="form-control" >
 
-              <option value="myUL"><?php foreach($music as $pr): ?>
+              <option value="playlist"><?php foreach($music as $pr): ?>
     <li><a href="#"><?= $pr['name'] ?></a></li>
   <?php endforeach; ?></option>
 
@@ -159,7 +176,7 @@
 
 
   <form action="#audio" method="get">
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search song..." title="Type in a song">
+<input type="text" id="myPlaylist" onkeyup="myFunction()" placeholder="Search song..." title="Type in a song">
 
    
   <h1>Music Player</h1>
@@ -167,31 +184,17 @@
   My Playlist
 </button>
 
-
-
-
 <audio id="audio" controls autoplay></audio>
-
-    <ul id="myUL">
-        <?php foreach ($music as $index => $pr): ?>
-            <li data-src="Delilah.mp3">
-              <a href="#">
-                <?= $pr['name'] ?>
-                &nbsp&nbsp
-                <button type="button" class="btn btn-primary play-button" data-track-index="<?= $index ?>">
-                Play
-              </button>
-             
-              <a type="button" class="btn btn-primary" href="/delete/<?= $pr['id'] ?>" >Delete</a>
-            
-             
-              
-            </a>  
-            </li>
-        <?php endforeach; ?>
+    <ul id="playlist">
+    <?php foreach ($music as $song): ?>
+            <li data-src="<?=base_url(); ?>/music/<?= $song['audio']; ?>.mp3"><?= $song['audio']; ?>
+              <a href="/addtoplaylist" class="hover-effect">
+              </a>  </li>
+      <?php endforeach; ?>
     </ul>
   </form>
-   
+
+
  
     <script>
     $(document).ready(function () {
@@ -261,9 +264,9 @@
 
         function myFunction() {
     var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
+    input = document.getElementById("myPlaylist");
     filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
+    ul = document.getElementById("playlist");
     li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
